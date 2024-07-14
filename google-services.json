@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "298293343826",
+    "firebase_url": "https://first-app-fed81-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "first-app-fed81",
+    "storage_bucket": "first-app-fed81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298293343826:android:002fc2093c3ea72e19918b",
+        "android_client_info": {
+          "package_name": "com.ortiz.upc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298293343826-hoh7i0trqjdr523d93g9oras6od1d92j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGiJBOlNfq6YNBPrNm3xG1-okTNoI0Cis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298293343826-hoh7i0trqjdr523d93g9oras6od1d92j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
