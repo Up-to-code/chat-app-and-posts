@@ -32,7 +32,6 @@ export const AuthContextProvider = ({ children }: any) => {
     return () => {
       checkAuth();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

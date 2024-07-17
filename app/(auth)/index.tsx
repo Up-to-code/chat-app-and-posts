@@ -20,7 +20,8 @@ import {
 import { router } from "expo-router";
 import { createUserDoc } from "@/lib/firebase/FirebaseServes";
 import InputField from "@/components/common/InputFiled";
-
+import { useColors } from "@/hooks/useColors";
+const { primary } = useColors();
 const Page = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -28,6 +29,7 @@ const Page = () => {
   const [name, setName] = useState("");
   const auth = FIREBASE_AUTH;
   const [type, setType] = useState("Sign in");
+
   const signIn = async () => {
     if (!email || !password) {
       alert("Please enter email and password");
@@ -138,7 +140,7 @@ const Page = () => {
         <TouchableOpacity
           onPress={() => setType(type === "login" ? "Sign up" : "login")}
         >
-          <Text className="text-blue-500 font-bold ">
+          <Text style={{ color: primary }} className=" font-bold ">
             {type === "login" ? "Sign up" : "Login"}
           </Text>
         </TouchableOpacity>
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   btnPrimary: {
-    backgroundColor: "#007bff",
+    backgroundColor: primary,
     marginVertical: 4,
   },
   btnPrimaryText: {

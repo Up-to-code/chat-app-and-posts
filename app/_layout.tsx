@@ -23,7 +23,7 @@ const MainLayout = () => {
     }
   }, [isAuthenticated]);
 
-  return <Slot />;
+  return <Slot  />;
 };
 export default function RootLayout() {
   return (

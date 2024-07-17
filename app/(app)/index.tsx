@@ -1,78 +1,65 @@
-import {
-  View,
-  Text,
-  Pressable,
-  ActivityIndicator,
-  TouchableOpacity,
-} from "react-native";
-import React from "react";
-import { LogOut } from "@/lib/firebase/FirebaseServes";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { router } from "expo-router";
-const index = () => {
-  const [loading, setLoading] = React.useState(false);
-  const Logout = async () => {
-    setLoading(true);
-    await LogOut();
-    setLoading(false);
-  };
-  const data = [
-    {
-      id: 1,
-      name: "Item 1",
-      image: "https://picsum.photos/200/300",
-    },
-    {
-      id: 2,
-      name: "Item 2",
-      image: "https://picsum.photos/200/300",
-    },
-  ];
+import { styled } from "nativewind";
+import ChatItem from "@/components/ChatItem";
+import { StatusBar } from "expo-status-bar";
+import { useAuth } from "@/context/AuthContext";
+import {
+  collection,
+  doc,
+  DocumentData,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+import { FIREBASE_DB } from "@/lib/firebase/FirebaseConfig";
+import { LogOut } from "@/lib/firebase/FirebaseServes";
+
+const ChatList: React.FC = () => {
+  
+  const [chatData, setChatData] = useState<DocumentData[]>([]);
+
+  useEffect(() => {
+    const q = query(collection(FIREBASE_DB, "users"));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          ...data,
+          id: doc.id,
+        };
+      });
+      setChatData(data);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <View>
-      <SafeAreaView>
-        <Text className="text-3xl mt-4 font-bold">index</Text>
-        <View style={{ height: 200 }}>
-          <FlashList
-            data={data}
-            renderItem={({ item }) => (
-              <View className=" p-4 rounded mt-4  ">
-                <TouchableOpacity
-                  onPress={() => router.push(`/chat/${item.id}`)}
-                >
-                  <Text
-                    style={{ color: "red", textAlign: "center" }}
-                    className="text-lg"
-                  >
-                    {item.name}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
-            estimatedItemSize={84}
-            keyExtractor={(item) => item.id.toString()}
+    <View className="flex-1 bg-white">
+      <StatusBar style="light" />
+      <Pressable className="flex-row items-center p-4 border-b border-gray-200" onPress={() => {LogOut()}}>
+        <Text className="text-lg font-bold">sigin Out</Text>
+      </Pressable>
+      <FlashList
+        data={chatData}
+        renderItem={({ item }) => (
+          <ChatItem
+            uid={item.uid}
+            time=""
+            name={item.name}
+            message={item.email}
+            avatar={item.avatar}
           />
-        </View>
-      </SafeAreaView>
+        )}
+        keyExtractor={(item) => item.id}
+        estimatedItemSize={70}
+      />
     </View>
   );
 };
 
-export default index;
-{
-  /* <Text className="text-3xl mt-4 font-bold">index</Text>
-        <Pressable
-          className="bg-red-500 p-4 rounded mt-4  "
-          onPress={() => {
-            Logout();
-          }}
-        >
-          {loading && (
-            <View style={defaultStyles.loadingOverlay}>
-              <ActivityIndicator size="large" color="#fff" />
-            </View>
-          )}
-          <Text>Pressable</Text>
-        </Pressable> */
-}
+export default styled(ChatList);

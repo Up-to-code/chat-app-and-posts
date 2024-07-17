@@ -98,7 +98,7 @@ export default function Chat() {
   };
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
-      <Text className="text-xl font-bold m-4">Chat {id}</Text>
+      <Text className="text-xl font-bold m-4">Chat </Text>
       <View className="flex-1 p-2">
         <FlashList
           ref={flashListRef}
